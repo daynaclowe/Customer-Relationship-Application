@@ -8,8 +8,8 @@ class CRM
 		@name = name
 		@rolodex = Rolodex.new
 
-	end
 
+	end
 
 	def print_main_menu
 		puts "[1] Please add a contact."
@@ -67,6 +67,16 @@ class CRM
 		
 	end
 
+	def print_modify_contact_menu
+		puts "[1] Update first name."
+		puts "[2] Update last name."
+		puts "[3] Update email."
+		puts "[4] Update note."
+		puts "[5] Return to main menu"
+		puts "Enter a number 1 - 4"
+
+	end
+
 	def modify_contact
 		puts "Please provide your user id - if you don't know your id type --get "
 		input = gets.chomp
@@ -75,32 +85,66 @@ class CRM
 		else
 			contact_id = input.to_i
 			the_contact = @rolodex.get_contact_by_id(contact_id)
-			puts "[1] Update first name."
-			puts "[2] Update last name."
-			puts "[3] Update email."
-			puts "[4] Update note."
-			puts "Enter a number 1 - 4"
-			input = gets.chomp.to_i
-			case input
-			when 1 
-				print "Update First Name: "
-				new_first_name = gets.chomp
-				the_contact.first_name = new_first_name
-			when 2
-				print "Update Last Name: "
-				new_last_name = gets.chomp
-				the_contact.last_name = new_last_name
-			when 3
-				print "Update Email: "
-				new_email = gets.chomp
-				the_contact.email = new_email
-			when 4
-				print "Update Note: "
-				new_note = gets.chomp
-				the_contact.note = new_note
+
+			while true
+				print_modify_contact_menu
+				input = gets.chomp.to_i
+				return if input == 5
+				print "You have chosen to update option #{input}. Press Y to continue updating or N to return to the main menu."
+				answer = gets.chomp.capitalize
+				if answer == "Y"
+					choose_option_from_modify_contact_menu(input) 
+				elsif answer == "N"
+					puts "You will now exit this window."
+					return
+				else  
+					puts "That's not an option. Please choose Y or N."
+
+				end
+				# @rolodex.update_contact(the_contact)
 			end
 
-			@rolodex.update_contact(the_contact)
+
+
+
+			# puts "[1] Update first name."
+			# puts "[2] Update last name."
+			# puts "[3] Update email."
+			# puts "[4] Update note."
+			# puts "Enter a number 1 - 4"
+			# input = gets.chomp.to_i
+			# print "You have chosen to update your first name. Press Y to continue updating or N to return to the main menu."
+			# answer = gets.chomp.capitalize
+			# if answer == "Y"
+			# 	case input
+
+			# 	when 1 
+			# 		print "Update First Name: "
+			# 		new_first_name = gets.chomp
+			# 		the_contact.first_name = new_first_name
+			# 	when 2
+			# 		print "Update Last Name: "
+			# 		new_last_name = gets.chomp
+			# 		the_contact.last_name = new_last_name
+			# 	when 3
+			# 		print "Update Email: "
+			# 		new_email = gets.chomp
+			# 		the_contact.email = new_email
+			# 	when 4
+			# 		print "Update Note: "
+			# 		new_note = gets.chomp
+			# 		the_contact.note = new_note
+
+			# 	end
+			# elsif answer == "N"
+			# 	puts "You will now exit this window."
+			# 	return
+			# else  
+			# 	puts "That's not an option. Please choose Y or N."
+
+			# end
+
+			# @rolodex.update_contact(the_contact)
 			# when 2 
 			# 	print "Update Last Name: "
 			# 	last_name = gets.replace
@@ -114,6 +158,37 @@ class CRM
 		# 	#puts "Your updated information is: #{contact.first_name} #{contact.last_name} <#{contact.email}> #{contact.id}"
 		# end
 	end
+end
+
+	def choose_option_from_modify_contact_menu(option) 
+		# print "You have chosen to update #{option}. Press Y to continue updating or N to return to the main menu."
+		# input = gets.chomp.capitalize
+		# if option == "Y"
+
+		case option
+		when 1 #then update_first_name
+				print "Update First Name: "
+				new_first_name = gets.chomp
+				the_contact.first_name = new_first_name
+			when 2 then update_last_name
+				# print "Update Last Name: "
+				# new_last_name = gets.chomp
+				# the_contact.last_name = new_last_name
+			when 3 then update_email
+				# print "Update Email: "
+				# new_email = gets.chomp
+				# the_contact.email = new_email
+			when 4 then update_note
+				# print "Update Note: "
+				# new_note = gets.chomp
+				# the_contact.note = new_note
+
+			end
+
+			@rolodex.update_contact(the_contact) #the_contact is a local variable of modify contact but i need it to also be local to this method
+	end
+
+def attribute
 end
 
 def display_all_contacts
