@@ -2,7 +2,7 @@ require_relative './contact.rb' #
 require_relative './rolodex.rb'
 
 class CRM
-	attr_reader :name #getter funct new needs initizalize to be used further in the app
+	attr_reader :name, :the_contact #getter funct new needs initizalize to be used further in the app
 
 	def initialize(name)
 		@name = name
@@ -47,10 +47,8 @@ class CRM
 			return
 		else 
 			puts "Invalid Option!"
-		end
-		# main_menu - will loop but will fucntion into functions too deep ie stack to deep - refer to the while loop
+		end # main_menu - will loop but will fucntion into functions too deep ie stack to deep - refer to the while loop
 	end
-
 
 	def add_contact
 		print "First Name: "
@@ -67,16 +65,6 @@ class CRM
 		
 	end
 
-	def print_modify_contact_menu
-		puts "[1] Update first name."
-		puts "[2] Update last name."
-		puts "[3] Update email."
-		puts "[4] Update note."
-		puts "[5] Return to main menu"
-		puts "Enter a number 1 - 4"
-
-	end
-
 	def modify_contact
 		puts "Please provide your user id - if you don't know your id type --get "
 		input = gets.chomp
@@ -84,7 +72,7 @@ class CRM
 			display_all_contacts
 		else
 			contact_id = input.to_i
-			the_contact = @rolodex.get_contact_by_id(contact_id)
+			@the_contact = @rolodex.get_contact_by_id(contact_id)
 
 			while true
 				print_modify_contact_menu
@@ -99,78 +87,28 @@ class CRM
 					return
 				else  
 					puts "That's not an option. Please choose Y or N."
-
 				end
-				# @rolodex.update_contact(the_contact)
 			end
-
-
-
-
-			# puts "[1] Update first name."
-			# puts "[2] Update last name."
-			# puts "[3] Update email."
-			# puts "[4] Update note."
-			# puts "Enter a number 1 - 4"
-			# input = gets.chomp.to_i
-			# print "You have chosen to update your first name. Press Y to continue updating or N to return to the main menu."
-			# answer = gets.chomp.capitalize
-			# if answer == "Y"
-			# 	case input
-
-			# 	when 1 
-			# 		print "Update First Name: "
-			# 		new_first_name = gets.chomp
-			# 		the_contact.first_name = new_first_name
-			# 	when 2
-			# 		print "Update Last Name: "
-			# 		new_last_name = gets.chomp
-			# 		the_contact.last_name = new_last_name
-			# 	when 3
-			# 		print "Update Email: "
-			# 		new_email = gets.chomp
-			# 		the_contact.email = new_email
-			# 	when 4
-			# 		print "Update Note: "
-			# 		new_note = gets.chomp
-			# 		the_contact.note = new_note
-
-			# 	end
-			# elsif answer == "N"
-			# 	puts "You will now exit this window."
-			# 	return
-			# else  
-			# 	puts "That's not an option. Please choose Y or N."
-
-			# end
-
-			# @rolodex.update_contact(the_contact)
-			# when 2 
-			# 	print "Update Last Name: "
-			# 	last_name = gets.replace
-			# when 3 
-			# 	print "Update Email :"
-			# 	email = gets.replace
-			# when 4  
-			# 	print "Update Note :"
-			# 	note = gets.replace
-		# else puts "That's not right. Choose an option 1 - 4"
-		# 	#puts "Your updated information is: #{contact.first_name} #{contact.last_name} <#{contact.email}> #{contact.id}"
-		# end
+		end
 	end
-end
+
+	def print_modify_contact_menu
+		puts "[1] Update first name."
+		puts "[2] Update last name."
+		puts "[3] Update email."
+		puts "[4] Update note."
+		puts "[5] Return to main menu"
+		puts "Enter a number 1 - 4"
+
+	end
 
 	def choose_option_from_modify_contact_menu(option) 
-		# print "You have chosen to update #{option}. Press Y to continue updating or N to return to the main menu."
-		# input = gets.chomp.capitalize
-		# if option == "Y"
-
 		case option
 		when 1 #then update_first_name
-				print "Update First Name: "
-				new_first_name = gets.chomp
-				the_contact.first_name = new_first_name
-			when 2 then update_last_name
+			print "Update First Name: "
+			new_first_name = gets.chomp
+			the_contact.first_name = new_first_name
+		when 2 then update_last_name
 				# print "Update Last Name: "
 				# new_last_name = gets.chomp
 				# the_contact.last_name = new_last_name
@@ -185,22 +123,17 @@ end
 
 			end
 
-			@rolodex.update_contact(the_contact) #the_contact is a local variable of modify contact but i need it to also be local to this method
+			@rolodex.update_contact(the_contact) #the_contact is a local variable of modify_contact but i need it to also be local to this method
+			puts "Your information has been sucessfully updated to #{new_first_name}"
+			puts "Choose [5] if you wish to return to the main menu, or another option to continue making changes."
+		end
+
+		def display_all_contacts
+			@rolodex.contacts.each do |contact|
+				puts "#{contact.first_name} #{contact.last_name} <#{contact.email}> #{contact.id}"
+			end
+		end
 	end
-
-def attribute
-end
-
-def display_all_contacts
-	@rolodex.contacts.each do |contact|
-		puts "#{contact.first_name} #{contact.last_name} <#{contact.email}> #{contact.id}"
-	end
-end
-end
-		# puts "input at choose_option: #{option}"
-		# option = 12
-		# puts "input at choose_option (after change) #{option}"
-
 
 crm = CRM.new("BitmakerLabs") #instance of object crm - one instance of the object
 crm.main_menu
