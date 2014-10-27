@@ -1,5 +1,7 @@
+require 'pry'
+
 class Rolodex
-	attr_reader :contacts
+	attr_accessor :contacts
 	@@index= 1000 #we dont store the unique identifier in the menu because of it's purpose, we don't store it in the contact because it only. if it is done in an instance variable if there are multiple roladexes they won't be globally unique. If we make it a class level variable every contact, regardless of how many rolodexes 
 
 	def initialize#(contacts)
@@ -13,11 +15,7 @@ class Rolodex
 	end
 
 	def get_contact_by_id(contact_id)
-		@contacts.each do |contact| 
-			if (contact.id == contact_id)
-				return contact 
-			end 
-		end
+		@contacts.select{|contact| contact.id == contact_id}
 	end
 
 	def update_contact(contact_to_update)
@@ -29,21 +27,17 @@ class Rolodex
 	end
 
 	def search_contact_by(option)
-		@contacts.each do |contact|
-			if (contact.id == contact_id)
-				puts @contact
-			elsif (contact.first_name == first_name)
-				return contact
-			elsif (contact.last_name == last_name)
-				return contact
-			elsif (contact.email == email)
-				return contact
-			end
+		results = @contacts.select do |contact| 
+			contact.first_name.include?(option) || contact.last_name.include?(option) || contact.email.include?(option)
+		end
+		results.each do |result|
+			puts "#{result.first_name} #{result.last_name}, #{result.email}"
 		end
 	end
 
-					
-					
+	def delete_contact(id)
+	end				
+
 
 end
 
