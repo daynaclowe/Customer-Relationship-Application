@@ -28,5 +28,22 @@ class Rolodex
 		end
 	end
 
+	def search_contact_by(option)
+		@contacts.each do |contact|
+			if (contact.id == contact_id)
+				puts @contact
+			elsif (contact.first_name == first_name)
+				return contact
+			elsif (contact.last_name == last_name)
+				return contact
+			elsif (contact.email == email)
+				return contact
+			end
+		end
+	end
+
+					
+					
+
 end
 
